@@ -15,7 +15,7 @@ jobs:
       - name: Extract project
         run: |
           unzip -q CarCheckTN_v1_5_OBD2_Advanced-1.zip
-          echo "PROJECT_DIR=$PWD/CarCheckTN_v1_5" >> $GITHUB_ENV
+          echo "PROJECT_DIR=$PWD/CarCheckTN_v1_5" >> "$GITHUB_ENV"
 
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -27,6 +27,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10.2'
+
+      - name: Enable AndroidX
+        run: |
+          echo "android.useAndroidX=true" >> "$PROJECT_DIR/gradle.properties"
+          echo "android.enableJetifier=true" >> "$PROJECT_DIR/gradle.properties"
 
       - name: Build APK
         run: |
